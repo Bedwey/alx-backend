@@ -20,7 +20,7 @@ class FIFOCache(BaseCaching):
 
     def put(self, key, item):
         """ Adds an item in the cache.
-            If the cache is full, it uses the FIFO 
+            If the cache is full, it uses the FIFO
             algorithm to remove the last item.
         """
         if key is not None and item is not None:
