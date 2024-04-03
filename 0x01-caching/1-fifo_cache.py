@@ -19,13 +19,16 @@ class FIFOCache(BaseCaching):
     """
 
     def put(self, key, item):
-        """ Assign the item value for the key in self.cache_data dict.
+        """ Adds an item in the cache.
+            If the cache is full, it uses the FIFO 
+            algorithm to remove the last item.
         """
         if key is not None and item is not None:
-            if len(self.cache_data) >= BaseCaching.MAX_ITEMS and key not in self.cache_data:
-                first = list(self.cache_data.keys())[0]
-                print("DISCARD: {}".format(first))
-                del self.cache_data[first]
+            if len(self.cache_data) >= BaseCaching.MAX_ITEMS:
+                if key not in self.cache_data:
+                    first = list(self.cache_data.keys())[0]
+                    print("DISCARD: {}".format(first))
+                    del self.cache_data[first]
             self.cache_data[key] = item
 
     def get(self, key):

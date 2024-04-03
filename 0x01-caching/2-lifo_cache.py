@@ -2,7 +2,7 @@
 
 """
 2-lifo_cache.py
-Module that defines the class FIFOCache
+Module that defines the class LIFOCache
 
 Classes:
     LIFOCache
@@ -19,14 +19,17 @@ class LIFOCache(BaseCaching):
     """
 
     def put(self, key, item):
-        """ Assign the item value for the key in self.cache_data dict.
+        """ Adds an item in the cache.
+            If the cache is full, it uses the LIFO 
+            algorithm to remove the last item.
         """
         if key is not None and item is not None:
             cacheLen = len(self.cache_data)
-            if cacheLen >= BaseCaching.MAX_ITEMS and key not in self.cache_data:
-                last = list(self.cache_data.keys())[cacheLen - 1]
-                print("DISCARD: {}".format(last))
-                del self.cache_data[last]
+            if cacheLen >= BaseCaching.MAX_ITEMS:
+                if key not in self.cache_data:
+                    last = list(self.cache_data.keys())[cacheLen - 1]
+                    print("DISCARD: {}".format(last))
+                    del self.cache_data[last]
             self.cache_data[key] = item
 
     def get(self, key):
